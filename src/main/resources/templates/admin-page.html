@@ -8,18 +8,18 @@
 </head>
 <body>
 <h1>
-    Таблица всех пользователей
+    Table of All Users
 </h1>
 <table border="1" cellpadding="7">
     <tr>
         <th> Id</th>
         <th> Username</th>
-        <th> Имя</th>
-        <th> Возраст</th>
+        <th> Name</th>
+        <th> Age</th>
         <th> Email</th>
         <th> Password</th>
-        <th> Изменение пользователя</th>
-        <th> Удаление пользователя</th>
+        <th> Update User</th>
+        <th> Delete User</th>
     </tr>
     <tr>
     <tr th:each="user : ${allUs}">
@@ -34,18 +34,18 @@
         </td>
         <td>
             <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
-                <input type="submit" value="Удалить">
+                <input type="submit" value="Delete">
             </form>
         </td>
     </tr>
 </table>
 <br>
-<h4>Моя страница :</h4>
+<h4>My Information :</h4>
 <button>
     <a th:href="@{/user}">Info</a>
 </button>
 <br>
-<h4>Добавить пользователя :</h4>
+<h4>Add User :</h4>
 <input type="button" value="Add" onclick="window.location.href='admin/new'"/>
 <br>
 <h4>Authorization page :</h4>
