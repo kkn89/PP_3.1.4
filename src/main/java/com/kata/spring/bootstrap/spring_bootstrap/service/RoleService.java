@@ -2,6 +2,7 @@ package com.kata.spring.bootstrap.spring_bootstrap.service;
 
 
 import com.kata.spring.bootstrap.spring_bootstrap.model.Role;
+import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -16,9 +17,9 @@ public interface RoleService {
 
     Role getById(long id);
 
-    Role getByName(String roleName);
+    Role getByName(String roleName) throws NotFoundException;
 
-    HashSet<Role> getRoleSet(String[] roleName);
+    HashSet<Role> getRoleSet(String[] roleName) throws NotFoundException;
 
 
 }

@@ -3,6 +3,7 @@ package com.kata.spring.bootstrap.spring_bootstrap.service;
 
 
 import com.kata.spring.bootstrap.spring_bootstrap.model.User;
+import javassist.NotFoundException;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface UserService {
 
     void delete(long id);
 
-    User getUserByName(String username);
+    User getUserByName(String username) throws NotFoundException;
 }

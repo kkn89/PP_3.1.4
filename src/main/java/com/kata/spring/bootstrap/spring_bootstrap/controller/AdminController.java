@@ -4,6 +4,7 @@ package com.kata.spring.bootstrap.spring_bootstrap.controller;
 import com.kata.spring.bootstrap.spring_bootstrap.model.User;
 import com.kata.spring.bootstrap.spring_bootstrap.service.RoleService;
 import com.kata.spring.bootstrap.spring_bootstrap.service.UserService;
+import javassist.NotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class AdminController {
         return "user-info";
     }
     @PostMapping("/new")
-    public String newUser(@ModelAttribute User user, @RequestParam(value = "nameRoles") String[] nameRoles) {
+    public String newUser(@ModelAttribute User user, @RequestParam(value = "nameRoles") String[] nameRoles) throws NotFoundException {
         user.setRoles(roleService.getRoleSet(nameRoles));
         userService.saveUser(user);
         return "redirect:/admin";
@@ -50,7 +51,7 @@ public class AdminController {
         return "edit-user";
     }
     @PutMapping(value = "/edit/{id}")
-    public String editUser(@ModelAttribute User user, @RequestParam(value = "nameRoles") String[] nameRoles) {
+    public String editUser(@ModelAttribute User user, @RequestParam(value = "nameRoles") String[] nameRoles) throws NotFoundException {
         user.setRoles(roleService.getRoleSet(nameRoles));
         userService.update(user);
         return "redirect:/admin";
