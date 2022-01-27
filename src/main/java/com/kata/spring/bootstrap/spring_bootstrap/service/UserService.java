@@ -18,5 +18,7 @@ public interface UserService {
 
     void delete(long id);
 
-    User getUserByName(String username) throws NotFoundException;
+    User getUserByName(String username) throws NotFoundException;;
+
+    User getByEmail(String email) throws NotFoundException;
 }
