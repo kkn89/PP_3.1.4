@@ -28,13 +28,13 @@ public class UserServiceImpl implements UserService {
         return new BCryptPasswordEncoder();
     }
     @Override
-    @Transactional
+
     public List<User> allUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    @Transactional
+
     public void saveUser(User user) {
         user.setPassword(bCrypt().encode(user.getPassword()));
         userRepository.save(user);
@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public User getById(long id) {
         User user = null;
         Optional<User> optional = userRepository.findById(id);
@@ -53,28 +52,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
-    public void update(User user) {
+       public void update(User user) {
         user.setPassword(bCrypt().encode(user.getPassword()));
         userRepository.save(user);
-
     }
 
     @Override
-    @Transactional
-    public void delete(long id) {
+       public void delete(long id) {
         userRepository.deleteById(id);
 
-    }
-
-    @Override
-    @Transactional
-    public User getUserByName(String username) throws NotFoundException{
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new NotFoundException(username);
-        }
-        return user;
     }
 
     @Override

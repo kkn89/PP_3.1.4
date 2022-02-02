@@ -21,27 +21,27 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    @Transactional
+
     public List<Role> allRoles() {
         return roleRepository.findAll();
     }
 
     @Override
-    @Transactional
+
     public void add(Role role) {
         roleRepository.save(role);
 
     }
 
     @Override
-    @Transactional
+
     public void update(Role role) {
         roleRepository.save(role);
 
     }
 
     @Override
-    @Transactional
+
     public Role getById(long id) {
         Role role = null;
         Optional<Role> optional = roleRepository.findById(id);
@@ -52,7 +52,7 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    @Transactional
+
     public Role getByName(String roleName) throws NotFoundException {
         Role role = roleRepository.findByRole(roleName);
         if(role == null){

@@ -22,22 +22,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userService = userService;
     }
 
-    public User findByUsername(String username) throws NotFoundException {
-        return userService.getUserByName(username);
-    }
-    // «Пользователь» – это просто Object. В большинстве случаев он может быть
-    //  приведен к классу UserDetails.
-    // Для создания UserDetails используется интерфейс UserDetailsService, с единственным методом:
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         User user = null;
-        try {
-            user = findByUsername(username);
+        try{
+            user = userService.getByEmail(name);
         } catch (NotFoundException e) {
             e.printStackTrace();
         }
+
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
+            throw new UsernameNotFoundException(String.format("User '%s' not found", name));
         }
         return user;
     }
