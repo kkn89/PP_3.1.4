@@ -1,10 +1,12 @@
 package com.kata.spring.bootstrap.spring_bootstrap.controller;
 
 
+import com.kata.spring.bootstrap.spring_bootstrap.model.Role;
 import com.kata.spring.bootstrap.spring_bootstrap.model.User;
 import com.kata.spring.bootstrap.spring_bootstrap.service.RoleService;
 import com.kata.spring.bootstrap.spring_bootstrap.service.UserService;
 import javassist.NotFoundException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +27,15 @@ public class AdminController {
     }
 
     @GetMapping
-    public String allUsers(Model model) {
+    public String allUsers(Model model, @AuthenticationPrincipal User user) {
+        List<Role> allRole = roleService.allRoles();
         List<User> allUsers = userService.allUsers();
-        model.addAttribute("allUs",userService.allUsers());
+        model.addAttribute("allRoles", allRole);
+        model.addAttribute("allUs", allUsers);
+        model.addAttribute("user", user);
         return "admin-page";
     }
-    @GetMapping("/new")
-    public String newUser(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        model.addAttribute("role", roleService.allRoles());
-        return "user-info";
-    }
+
     @PostMapping("/new")
     public String newUser(@ModelAttribute User user, @RequestParam(value = "nameRoles") String[] nameRoles) throws NotFoundException {
         user.setRoles(roleService.getRoleSet(nameRoles));
@@ -44,12 +43,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getById(id));
-        model.addAttribute("role", roleService.allRoles());
-        return "edit-user";
-    }
+
     @PutMapping(value = "/edit/{id}")
     public String editUser(@ModelAttribute User user, @RequestParam(value = "nameRoles") String[] nameRoles) throws NotFoundException {
         user.setRoles(roleService.getRoleSet(nameRoles));

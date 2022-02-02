@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //указываем что будет видно ролям Admin и User
                 .hasAnyRole("ADMIN", "USER")
                 .antMatchers("/**")
+                // Все что дальше /** видно только роли Admin
                 .hasAnyRole("ADMIN")
                 .and()
                 .formLogin() // Spring сам подставит свою логин форму
@@ -56,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .successHandler(successUserHandler) // подключаем наш SuccessHandler для перенаправления по ролям
                 // Handler - обработчик успешной аутентификации
+                //.failureHandler(authenticationFailureHandler) //указываем логику обработки при неудачном логине. На будущее
                 .permitAll()
                 .and()
                 .logout()
@@ -63,5 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 //выключаем кроссдоменную секьюрность
                 .and().csrf().disable();
+
     }
 }
