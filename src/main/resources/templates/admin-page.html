@@ -59,8 +59,8 @@
                     <div class="card">
                         <!--Вкладки-->
                         <!--Вкладка таблицы пользователей-->
-                        <ul class="nav nav-tabs" id="myTab" role="tablist"> <!--menu-->
-                            <li class="nav-item" role="presentation"> <!--li-list item-->
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
                                 <a class="nav-link active" id="admin-tab" data-toggle="tab" href="#admin"
                                    role="tab" aria-controls="admin" aria-selected="true">User table</a>
                             </li>
@@ -136,7 +136,7 @@
                                                                 </button>
                                                             </div>
                                                             <form th:action="@{/admin/edit/{id}(id=${user.id})}"
-                                                                  th:object="${user}" method="post"
+                                                                  th:object="${user}" th:method="patch"
                                                                   th:id="${'editForm' + user.id}">
                                                                 <div class="modal-body col-md text-center">
                                                                     <label class="font-weight-bold"
@@ -187,11 +187,9 @@
                                                                     <label class="font-weight-bold"
                                                                            for="password">Password</label>
                                                                     <input type="password"
-                                                                           class="form-control"
-                                                                           value=""
+                                                                           class="form-control form-control-sm"
                                                                            name="password"
-                                                                           id="password"
-                                                                           required>
+                                                                           id="password">
                                                                     <br>
                                                                     <label class="font-weight-bold"
                                                                            for="roles">Roles</label>
@@ -376,7 +374,7 @@
                                                     <br>
                                                     <div class="font-weight-bold">
                                                         <label for="password3">Password</label>
-                                                        <input type="text"
+                                                        <input type="password"
                                                                class="form-control"
                                                                placeholder="Password"
                                                                name="password"

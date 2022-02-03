@@ -42,9 +42,15 @@ public class AdminController {
         userService.saveUser(user);
         return "redirect:/admin";
     }
+    @GetMapping("/edit/{id}")
+    public String editUser(@PathVariable("id") long id, Model model) {
+        model.addAttribute("user", userService.getById(id));
+        model.addAttribute("role", roleService.allRoles());
+        return "edit-user";
+    }
 
 
-    @PutMapping(value = "/edit/{id}")
+    @PatchMapping(value = "/edit/{id}")
     public String editUser(@ModelAttribute User user, @RequestParam(value = "nameRoles") String[] nameRoles) throws NotFoundException {
         user.setRoles(roleService.getRoleSet(nameRoles));
         userService.update(user);
