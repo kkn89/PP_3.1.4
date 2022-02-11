@@ -7,19 +7,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface RoleService {
-    List<Role> allRoles();
-    void add(Role role);
 
-    void update(Role role);
+    void addRole(Set<Role> role);
 
-    Role getById(long id);
+    void updateRole(Role role);
 
-    Role getByName(String roleName) throws NotFoundException;
+    void deleteRoleById(long id);
 
-    HashSet<Role> getRoleSet(String[] roleName) throws NotFoundException;
+    Set<Role> getAllRoles();
+
+    Role getRole(long id);
+
+    Role getRoleByRole(String role);
+
+
 
 
 }

@@ -6,17 +6,20 @@ import com.kata.spring.bootstrap.spring_bootstrap.model.User;
 import javassist.NotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
-    List<User> allUsers();
+    List<User> getAllUsers();
 
-    void saveUser(User user);
+    void addUser(User user);
 
-    User getById(long id);
+    void updateUser(User user);
 
-    void update(User user);
+    void deleteUserById(long id);
 
-    void delete(long id);
+    User getUser(long id);
 
-    User getByEmail(String email) throws NotFoundException;
+    Optional<User> getUserById(long id);
+
+    User getByUsername(String username);
 }
