@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 // Для того, чтобы в дальнейшим использовать класс User в Spring Security, он должен реализовывать интерфейс UserDetails.
@@ -31,7 +32,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -150,5 +151,28 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = new HashSet<>();
+        if (roles.contains("ROLE_ADMIN")) {
+            this.roles.add(new Role("ROLE_ADMIN"));
+        }
+        if (roles.contains("ROLE_USER")) {
+            this.roles.add(new Role("ROLE_USER"));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", age=" + age +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

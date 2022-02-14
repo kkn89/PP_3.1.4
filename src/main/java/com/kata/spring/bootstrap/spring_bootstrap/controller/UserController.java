@@ -9,14 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/api")
 public class UserController {
 
-    @GetMapping
-    public String userInfo(@AuthenticationPrincipal User user, Model model){
-        model.addAttribute("user",user);
-        model.addAttribute("roles",user.getRoles());
+    @GetMapping("/user")
+    public String userPage() {
         return "user-page";
+    }
+
+    @GetMapping("/admin")
+    public String adminPage() {
+        return "admin-page";
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login-page";
     }
 
 }

@@ -1,6 +1,7 @@
 package com.kata.spring.bootstrap.spring_bootstrap.service;
 
 
+import com.kata.spring.bootstrap.spring_bootstrap.dao.UserRepository;
 import com.kata.spring.bootstrap.spring_bootstrap.model.User;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,24 +16,24 @@ import javax.transaction.Transactional;
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
-    public UserDetailsServiceImpl(UserService userService) {
-        this.userService = userService;
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = null;
         try{
-            user = userService.getByEmail(name);
-        } catch (NotFoundException e) {
+            user = userRepository.getByUsername(username);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", name));
+            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
         return user;
     }

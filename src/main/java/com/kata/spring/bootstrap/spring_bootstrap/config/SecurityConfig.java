@@ -37,27 +37,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder()); // конфигурация для прохождения аутентификации
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/user")
-                //указываем что будет видно ролям Admin и User
-                .hasAnyRole("ADMIN", "USER")
-                .antMatchers("/**")
-                // Все что дальше /** видно только роли Admin
-                .hasAnyRole("ADMIN")
+                .antMatchers( "/", "/login", "/logout").permitAll() // доступность всем
+                .antMatchers("/user/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')") // разрешаем входить на /user пользователям с ролью User
+                .antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
                 .and()
-                .formLogin() // Spring сам подставит свою логин форму
-                .loginPage("/login")  //указываем свою форму
-                .usernameParameter("email")
-                .successHandler(successUserHandler) // подключаем наш SuccessHandler для перенаправления по ролям
-                // Handler - обработчик успешной аутентификации
-                //.failureHandler(authenticationFailureHandler) //указываем логику обработки при неудачном логине. На будущее
+                .formLogin()  // Spring сам подставит свою логин форму
+                .loginPage("/login")
+                .successHandler(successUserHandler) // подключаем наш SuccessHandler для перенеправления по ролям
+                .loginProcessingUrl("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
                 .permitAll()
                 .and()
                 .logout()

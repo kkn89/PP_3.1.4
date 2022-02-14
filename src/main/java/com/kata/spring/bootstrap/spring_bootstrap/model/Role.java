@@ -1,5 +1,7 @@
 package com.kata.spring.bootstrap.spring_bootstrap.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -9,6 +11,11 @@ import java.util.Set;
 // Имя роли должно соответствовать шаблону: «ROLE_ИМЯ», например, ROLE_USER.
 @Entity
 @Table(name = "roles")
+@AllArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        getterVisibility = JsonAutoDetect.Visibility.NONE,
+        isGetterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -24,7 +31,21 @@ public class Role implements GrantedAuthority {
     public Role() {
     }
 
+    public Role(Long id) {
+        this.id = id;
+    }
+
+    public Role(Long id, String role) {
+        this.id = id;
+        this.role = role;
+    }
+
     public Role(String role) {
+        if (role.contains("ROLE_ADMIN")) {
+            this.id = 1L;
+        } else if (role.contains("ROLE_USER")) {
+            this.id = 2L;
+        }
         this.role = role;
     }
 
@@ -56,6 +77,10 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return getRole();
+    }
+    @Override
+    public String toString() {
+        return role;
     }
 
 }
