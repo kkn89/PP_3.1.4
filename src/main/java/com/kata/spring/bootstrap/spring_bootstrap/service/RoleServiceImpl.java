@@ -1,7 +1,7 @@
 package com.kata.spring.bootstrap.spring_bootstrap.service;
 
 
-import com.kata.spring.bootstrap.spring_bootstrap.dao.RoleRepository;
+import com.kata.spring.bootstrap.spring_bootstrap.Repository.RoleRepository;
 import com.kata.spring.bootstrap.spring_bootstrap.model.Role;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

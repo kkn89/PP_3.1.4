@@ -2,7 +2,7 @@ package com.kata.spring.bootstrap.spring_bootstrap.service;
 
 
 
-import com.kata.spring.bootstrap.spring_bootstrap.dao.UserRepository;
+import com.kata.spring.bootstrap.spring_bootstrap.Repository.UserRepository;
 import com.kata.spring.bootstrap.spring_bootstrap.model.Role;
 import com.kata.spring.bootstrap.spring_bootstrap.model.User;
 import javassist.NotFoundException;
